@@ -1,0 +1,41 @@
+
+# COMMAND
+# python entrance.py train_fp --round 1 --config ../config/lits_fp.yaml --data_dir ../data/seg/LiTS/train_crop_npy_256 --split_dir ../data/seg/LiTS/split
+
+# general
+task: lits
+
+
+# data
+data_dir:
+split_dir:
+patch_size: 128,128,64
+batch_size: 6
+random_noise_p: 0.5
+balance_rate: 0.8
+num_workers: 6
+crop_type: balance
+da_scaling: 0.7,1.4
+scal_order: 3
+
+# training 
+max_epoch: 4000
+loss: hybrid
+test_interval: 50
+
+
+
+# model
+model: UResQ
+nMod: 1
+nClass: 3
+init_stride: 2,2,1
+depth: 1,1,1,1,1,1,1,1,1
+width: 32,64,128,256,512,256,128,64,32
+dilation: 1,1,1,1,1,1,1,1,1
+nla: relu
+drop_rate: 0.5
+ds: simple
+hetero_dim: true
+blk: mid
+

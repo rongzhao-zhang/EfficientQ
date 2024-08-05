@@ -1,0 +1,43 @@
+
+# COMMAND for 2-bit (4-level) quantization
+# python entrance.py ptq --qlvl_w 4 --qlvl_a 4 --round 1 --config ../config/brats_ptq.yaml  --pretrain ../pretrain/brats/round1/mid/state_0500.pkl --data_dir ../data/seg/BRATS2020/train_std_crop --split_dir ../data/seg/BRATS2020/split
+# 
+
+# general
+task: brats
+
+# data
+data_dir:
+split_dir:
+patch_size: 128,128,128
+batch_size: 4
+test_batch_size: 4
+data_on_disk: true
+multi_label: brats
+merge_type: con
+access_type: npz
+num_workers: 4
+
+# model
+model: UResQ
+nMod: 4
+nClass: 4
+init_stride: 2,2,2
+depth: 1,1,1,1,1,1,1
+width: 32,64,128,256,128,64,32
+dilation: 1,1,1,1,1,1,1
+nla: relu
+drop_rate: 0.5
+ds: simple
+hetero_dim: true
+blk: mid
+
+# PTQ config 
+qconv: effq
+q_first: 256,-1 
+q_last: 256,-1 
+lwq_dataid: 0
+lwq_batchsz: 1
+lwq_patchsz: 192,192,128
+
+

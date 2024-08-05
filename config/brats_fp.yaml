@@ -1,0 +1,42 @@
+
+# COMMAND
+# python entrance.py train_fp --round 1 --config ../config/brats_fp.yaml --data_dir ../data/seg/BRATS2020/train_std_crop --split_dir ../data/seg/BRATS2020/split
+
+# general
+task: brats
+
+
+# data
+data_dir:
+split_dir:
+patch_size: 128,128,128
+batch_size: 4
+test_batch_size: 4
+data_on_disk: true
+multi_label: brats
+merge_type: con
+crop_type: balance
+balance_rate: 0.5
+access_type: npz
+num_workers: 4
+
+# train
+max_epoch: 500
+loss: bhybrid
+lr: 0.005
+
+
+# model
+model: UResQ
+nMod: 4
+nClass: 4
+init_stride: 2,2,2
+depth: 1,1,1,1,1,1,1
+width: 32,64,128,256,128,64,32
+dilation: 1,1,1,1,1,1,1
+nla: relu
+drop_rate: 0.5
+ds: simple
+hetero_dim: true
+blk: mid
+
